@@ -48,3 +48,7 @@ const phoneInfo = {
 };
 
 console.log(phoneInfo);
+
+## 👨‍💻 ᴅᴇᴠᴇʟᴏᴘᴇʀꜱ
+
+<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" width="20"> ᴄᴏɴᴛᴀᴄᴛ ᴏɴ ᴛᴇʟᴇɢʀᴀᴍ
