@@ -35,6 +35,21 @@
 5. ᴏᴘᴛɪᴏɴᴀʟ: ᴅᴏᴡɴʟᴏᴀᴅ/ᴄᴏᴘʏ ɪɴꜰᴏ ᴀꜱ ᴀ ᴛᴇxᴛ ꜰɪʟᴇ.
 
 ---
+## 👨🏻‍💻 ᴅᴇᴠᴇʟᴏᴘᴇʀꜱ
+
+[<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" width="20"> **ᴊᴏɪɴ ᴏɴ ᴛᴇʟᴇɢʀᴀᴍ**](https://t.me/providerbotz)
+
+---
+
+## ⏱️ ᴡᴀᴛᴄʜ ᴛʜᴇ ꜱɪᴛᴇ
+
+[<img src="https://cdn-icons-png.flaticon.com/512/159/159748.png" width="20"> **ᴡᴀᴛᴄʜ ɴᴏᴡ**](https://t.me/providerbotz)
+
+---
+
+## ❤️ ꜱᴜᴘᴘᴏʀᴛ ᴛʜɪꜱ ᴘʀᴏᴊᴇᴄᴛ
+
+ɢɪᴠᴇ ⭐ ᴏɴ ɢɪᴛʜᴜʙ ᴛᴏ ᴍᴏᴛɪᴠᴀᴛᴇ ᴍᴏʀᴇ ᴜᴘᴅᴀᴛᴇꜱ!
 
 ## 📦 ᴄᴏᴅᴇ ꜱɴɪᴘᴘᴇᴛ (ᴊᴀᴠᴀꜱᴄʀɪᴘᴛ ᴘʜᴏɴᴇ ɪɴꜰᴏ)
 
@@ -48,9 +63,3 @@ const phoneInfo = {
 };
 
 console.log(phoneInfo);
-
----
-
-## 👨‍💻 ᴅᴇᴠᴇʟᴏᴘᴇʀꜱ
-
-<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" width="20"> ᴄᴏɴᴛᴀᴄᴛ ᴏɴ ᴛᴇʟᴇɢʀᴀᴍ
