@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneSpecs Pro | Mobile Device Information</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --bg-light: #f8f9fa;
+            --bg-card-light: #ffffff;
+            --text-light: #2b2d42;
+            --text-muted-light: #6c757d;
+            --bg-dark: #121212;
+            --bg-card-dark: #1e1e1e;
+            --text-dark: #e9ecef;
+            --text-muted-dark: #adb5bd;
+            --shadow-light: 0 10px 30px rgba(0,0,0,0.08);
+            --shadow-dark: 0 10px 30px rgba(0,0,0,0.3);
+            --gradient-primary: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            --gradient-secondary: linear-gradient(135deg, #f72585 0%, #b5179e 100%);
+            --gradient-accent: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        body.light-mode {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.dark-mode {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        /* Premium Splash Screen */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #splash-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .splash-content {
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        .splash-logo {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .splash-text {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+            letter-spacing: -0.025em;
+            background: linear-gradient(45deg, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .splash-subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: white;
+            border-radius: 4px;
+            animation: progress 2.5s ease-in-out;
+        }
+
+        /* Enhanced Header */
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(30deg) scale(1.05);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 1rem;
+        }
+
+        /* Enhanced Search Form */
+        .search-container {
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-form {
+            display: flex;
+            background: var(--bg-card-light);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .search-form {
+            background: var(--bg-card-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .search-form:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 1.25rem 1.5rem;
+            font-size: 1.1rem;
+            border: none;
+            background: transparent;
+            outline: none;
+            min-width: 0;
+            color: inherit;
+            font-weight: 500;
+        }
+
+        .search-form input::placeholder {
+            color: var(--text-muted-light);
+            font-weight: 400;
+        }
+
+        .dark-mode .search-form input::placeholder {
+            color: var(--text-muted-dark);
+        }
+
+        .search-form button {
+            padding: 1.25rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .search-form button:active {
+            transform: translateY(0);
+        }
+
+        /* Search Suggestions */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-card-light);
+            border-radius: 0 0 16px 16px;
+            box-shadow: var(--shadow-light);
+            z-index: 10;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .dark-mode .search-suggestions {
+            background: var(--bg-card-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .suggestion-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid;
+            border-color: inherit;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .suggestion-item:hover {
+            background: rgba(67, 97, 238, 0.1);
+            opacity: 1;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-icon {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Search History */
+        .search-history {
+            margin-bottom: 2rem;
+            max-height: 200px;
+            overflow-y: auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .search-history h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .history-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .history-item {
+            background: var(--bg-card-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dark-mode .history-item {
+            background: var(--bg-card-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .history-item:hover {
+            transform: translateY(-2px);
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        /* Enhanced Results */
+        #result {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--text-muted-light);
+        }
+
+        .dark-mode .loading {
+            color: var(--text-muted-dark);
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.2s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        .dark-mode .spinner {
+            border: 4px solid #2d3748;
+            border-top: 4px solid var(--primary);
+        }
+
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        .dark-mode .skeleton {
+            background: linear-gradient(90deg, #2d3748 25%, #4a5568 50%, #2d3748 75%);
+            background-size: 200% 100%;
+        }
+
+        .skeleton-text {
+            height: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skeleton-title {
+            height: 2rem;
+            width: 70%;
+            margin-bottom: 1rem;
+        }
+
+        .skeleton-image {
+            height: 300px;
+            width: 100%;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        /* Enhanced Phone Header */
+        .phone-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-card-light);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            animation: slideUp 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .phone-header {
+            background: var(--bg-card-dark);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .phone-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .phone-header:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+        }
+
+        .phone-header h2 {
+            margin: 0 0 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: inherit;
+            letter-spacing: -0.025em;
+        }
+
+        .phone-image-container {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+        }
+
+        .phone-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .phone-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* Phone Gallery - COMPLETELY FIXED */
+        .phone-gallery {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .gallery-title {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            background: var(--bg-card-light);
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dark-mode .gallery-item {
+            background: var(--bg-card-dark);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: var(--transition);
+            background: #f8f9fa;
+        }
+
+        .dark-mode .gallery-image {
+            background: #2d3748;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Specs Grid */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .spec-section {
+            background: var(--bg-card-light);
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            animation: slideUp 0.5s ease;
+            animation-fill-mode: both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .spec-section {
+            background: var(--bg-card-dark);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .spec-section:hover {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+
+        .spec-section h3 {
+            margin: 0 0 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: inherit;
+            border-bottom: 2px solid;
+            border-image: var(--gradient-primary) 1;
+            padding-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .spec-item {
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid;
+            border-color: inherit;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .spec-item:hover {
+            opacity: 1;
+            padding-left: 0.5rem;
+        }
+
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+
+        .spec-item strong {
+            font-weight: 500;
+            color: inherit;
+            min-width: 140px;
+            flex-shrink: 0;
+        }
+
+        .spec-value {
+            color: inherit;
+            font-weight: 400;
+            text-align: right;
+            flex: 1;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid;
+            border-color: inherit;
+            opacity: 0.7;
+            position: relative;
+            padding-left: 1.5rem;
+            transition: var(--transition);
+        }
+
+        ul li:hover {
+            opacity: 1;
+            padding-left: 2rem;
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Enhanced Prices Section */
+        .prices-section {
+            background: var(--bg-card-light);
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            animation: slideUp 0.5s ease;
+        }
+
+        .dark-mode .prices-section {
+            background: var(--bg-card-dark);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .prices-section:hover {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        }
+
+        .prices-section h3 {
+            margin: 0 0 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: inherit;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .region-prices {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+
+        .dark-mode .region-prices {
+            background: #2d3748;
+        }
+
+        .region-prices:hover {
+            transform: translateX(5px);
+        }
+
+        .region-prices h4 {
+            margin: 0 0 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .region-prices p {
+            margin: 0.75rem 0;
+            font-weight: 500;
+            color: inherit;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .region-prices p span {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            margin-top: 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .comparison-section h3 {
+            margin: 0 0 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: inherit;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .comparison-item {
+            background: var(--bg-card-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .dark-mode .comparison-item {
+            background: var(--bg-card-dark);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .comparison-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .comparison-item h4 {
+            margin: 0 0 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: inherit;
+        }
+
+        .comparison-item p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Enhanced Error */
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            font-weight: 500;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+            animation: shake 0.5s ease;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .dark-mode .error {
+            background: #2d3748;
+        }
+
+        /* Enhanced Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid;
+            border-color: inherit;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .developer {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .developer:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .search-form {
+                flex-direction: column;
+                border-radius: 12px;
+                padding: 0;
+            }
+            
+            .search-form input {
+                border-radius: 12px 12px 0 0;
+                padding: 1.5rem;
+                text-align: center;
+            }
+            
+            .search-form button {
+                border-radius: 0 0 12px 12px;
+                margin-top: 4px;
+            }
+            
+            .phone-header {
+                padding: 2rem 1.5rem;
+            }
+            
+            .phone-header h2 {
+                font-size: 2rem;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .spec-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .spec-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .spec-item strong {
+                min-width: auto;
+                margin-bottom: 0.5rem;
+            }
+            
+            .spec-value {
+                text-align: left;
+            }
+            
+            .splash-logo {
+                font-size: 4rem;
+            }
+            
+            .splash-text {
+                font-size: 2rem;
+            }
+            
+            .splash-subtitle {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- Premium Splash Screen -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="splash-text">PhoneSpecs Pro</div>
+            <div class="splash-subtitle">Your comprehensive mobile device information resource</div>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <header>
+        <div class="header-content">
+            <h1>PhoneSpecs Pro</h1>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-container">
+            <form class="search-form" id="searchForm">
+                <input type="text" id="query" placeholder="Search for a phone model (e.g., iPhone 14 Pro, Samsung Galaxy S23)" required autocomplete="off">
+                <button type="submit">Search</button>
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </form>
+        </div>
+        
+        <div class="search-history" id="searchHistory">
+            <h3><i class="fas fa-history"></i> Recent Searches</h3>
+            <div class="history-items" id="historyItems"></div>
+        </div>
+        
+        <div id="result">
+            <div class="phone-header">
+                <h2 id="phoneName"></h2>
+                <div class="phone-image-container">
+                    <img id="phoneImage" src="" alt="Phone Image" class="phone-image">
+                </div>
+            </div>
+            
+            <div class="phone-gallery" id="phoneGallery">
+                <h3 class="gallery-title"><i class="fas fa-images"></i> Phone Gallery</h3>
+                <div class="gallery-grid" id="galleryGrid"></div>
+            </div>
+            
+            <div class="specs-grid" id="specs"></div>
+            <div class="prices-section" id="prices"></div>
+            <div class="comparison-section" id="comparison"></div>
+            <p class="error" id="error"></p>
+        </div>
+        
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Searching for phone details...</p>
+            <!-- Skeleton loading -->
+            <div style="max-width: 800px; margin: 2rem auto 0;">
+                <div class="skeleton skeleton-title" style="margin: 0 auto 2rem;"></div>
+                <div class="skeleton skeleton-image"></div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    <div>
+                        <div class="skeleton skeleton-text" style="width: 60%; margin-bottom: 1rem;"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                    <div>
+                        <div class="skeleton skeleton-text" style="width: 60%; margin-bottom: 1rem;"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>PhoneSpecs Pro &copy; 2023 - Comprehensive Mobile Device Information</p>
+        <div class="developer">
+            <i class="fas fa-code"></i>
+            Developed by Vinayak
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const splashScreen = document.getElementById('splash-screen');
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const form = document.getElementById('searchForm');
+        const queryInput = document.getElementById('query');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        const resultDiv = document.getElementById('result');
+        const loadingDiv = document.getElementById('loading');
+        const phoneName = document.getElementById('phoneName');
+        const phoneImage = document.getElementById('phoneImage');
+        const phoneGallery = document.getElementById('phoneGallery');
+        const galleryGrid = document.getElementById('galleryGrid');
+        const specsDiv = document.getElementById('specs');
+        const pricesDiv = document.getElementById('prices');
+        const comparisonDiv = document.getElementById('comparison');
+        const errorP = document.getElementById('error');
+        const searchHistory = document.getElementById('searchHistory');
+        const historyItems = document.getElementById('historyItems');
+
+        // Popular phone models for suggestions
+        const popularPhones = [
+            "iPhone 14 Pro", "iPhone 14", "iPhone 13", "Samsung Galaxy S23 Ultra", 
+            "Samsung Galaxy S23", "Google Pixel 7 Pro", "Google Pixel 7", 
+            "OnePlus 11", "Xiaomi 13 Pro", "Xiaomi 13", "Samsung Galaxy Z Fold4",
+            "Samsung Galaxy Z Flip4", "iPhone SE (2022)", "Google Pixel 6a"
+        ];
+
+        // Comparison phones data
+        const comparisonPhones = [
+            {
+                name: "iPhone 14 Pro",
+                brand: "Apple",
+                display: "6.1\" Super Retina XDR",
+                camera: "48MP Main, 12MP Ultra Wide, 12MP Telephoto",
+                chip: "A16 Bionic",
+                price: "$999"
+            },
+            {
+                name: "Samsung Galaxy S23",
+                brand: "Samsung",
+                display: "6.1\" Dynamic AMOLED 2X",
+                camera: "50MP Wide, 12MP Ultra Wide, 10MP Telephoto",
+                chip: "Snapdragon 8 Gen 2",
+                price: "$799"
+            },
+            {
+                name: "Google Pixel 7",
+                brand: "Google",
+                display: "6.3\" OLED",
+                camera: "50MP Wide, 12MP Ultra Wide",
+                chip: "Google Tensor G2",
+                price: "$599"
+            }
+        ];
+
+        // Phone database with images and specs - COMPLETELY FIXED
+        const phoneDatabase = {
+            "iphone 14 pro": {
+                name: "iPhone 14 Pro",
+                images: [
+                    {
+                        src: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&h=300&fit=crop",
+                        title: "Front View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop",
+                        title: "Back View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
+                        title: "Side View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1598301257982-0cf01499abb2?w=400&h=300&fit=crop",
+                        title: "Camera Details"
+                    }
+                ],
+                specs: {
+                    'Display': {
+                        'Size': '6.1 inches',
+                        'Resolution': '2556 x 1179 pixels',
+                        'Type': 'Super Retina XDR OLED',
+                        'Refresh Rate': '120Hz ProMotion'
+                    },
+                    'Camera': {
+                        'Main': '48 MP, f/1.8, 24mm (wide)',
+                        'Ultra Wide': '12 MP, f/2.2, 13mm, 120˚',
+                        'Telephoto': '12 MP, f/2.8, 77mm (telephoto)',
+                        'Features': 'Dual-LED dual-tone flash, HDR'
+                    },
+                    'Performance': {
+                        'Chipset': 'Apple A16 Bionic',
+                        'CPU': 'Hexa-core (2x3.46 GHz + 4x2.02 GHz)',
+                        'GPU': 'Apple GPU (5-core graphics)',
+                        'RAM': '6GB'
+                    },
+                    'Battery': {
+                        'Type': 'Li-Ion 3200 mAh, non-removable',
+                        'Charging': 'Fast charging 20W, 50% in 30 min',
+                        'Wireless': 'MagSafe wireless charging 15W'
+                    }
+                },
+                prices: {
+                    'usa': {
+                        '128GB': '$999',
+                        '256GB': '$1,099',
+                        '512GB': '$1,299',
+                        '1TB': '$1,499'
+                    }
+                }
+            },
+            "samsung galaxy s23 ultra": {
+                name: "Samsung Galaxy S23 Ultra",
+                images: [
+                    {
+                        src: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&h=300&fit=crop",
+                        title: "Front View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=300&fit=crop",
+                        title: "Back View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1610945415368-5cc31d7ee7bb?w=400&h=300&fit=crop",
+                        title: "Side View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1610945415368-5cc31d7ee7bb?w=400&h=300&fit=crop&crop=right",
+                        title: "Camera Details"
+                    }
+                ],
+                specs: {
+                    'Display': {
+                        'Size': '6.8 inches',
+                        'Resolution': '3088 x 1440 pixels',
+                        'Type': 'Dynamic AMOLED 2X',
+                        'Refresh Rate': '120Hz'
+                    },
+                    'Camera': {
+                        'Main': '200 MP, f/1.7, 24mm (wide)',
+                        'Ultra Wide': '12 MP, f/2.2, 13mm, 120˚',
+                        'Telephoto': '10 MP, f/2.4, 70mm (telephoto)',
+                        'Periscope': '10 MP, f/4.9, 230mm (periscope telephoto)'
+                    },
+                    'Performance': {
+                        'Chipset': 'Qualcomm SM8550-AC Snapdragon 8 Gen 2',
+                        'CPU': 'Octa-core (1x3.36 GHz & 4x2.8 GHz & 3x2.0 GHz)',
+                        'GPU': 'Adreno 740',
+                        'RAM': '8GB/12GB'
+                    },
+                    'Battery': {
+                        'Type': 'Li-Ion 5000 mAh, non-removable',
+                        'Charging': 'Fast charging 45W',
+                        'Wireless': 'Fast wireless charging 15W'
+                    }
+                },
+                prices: {
+                    'usa': {
+                        '256GB': '$1,199',
+                        '512GB': '$1,379',
+                        '1TB': '$1,619'
+                    }
+                }
+            },
+            "google pixel 7 pro": {
+                name: "Google Pixel 7 Pro",
+                images: [
+                    {
+                        src: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
+                        title: "Front View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&h=300&fit=crop",
+                        title: "Back View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop",
+                        title: "Side View"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1598301257982-0cf01499abb2?w=400&h=300&fit=crop",
+                        title: "Camera Details"
+                    }
+                ],
+                specs: {
+                    'Display': {
+                        'Size': '6.7 inches',
+                        'Resolution': '3120 x 1440 pixels',
+                        'Type': 'LTPO AMOLED',
+                        'Refresh Rate': '120Hz'
+                    },
+                    'Camera': {
+                        'Main': '50 MP, f/1.9, 25mm (wide)',
+                        'Ultra Wide': '12 MP, f/2.2, 126˚',
+                        'Telephoto': '48 MP, f/3.5, 120mm (telephoto)',
+                        'Features': 'Dual-LED dual-tone flash, HDR'
+                    },
+                    'Performance': {
+                        'Chipset': 'Google Tensor G2',
+                        'CPU': 'Octa-core (2x2.85 GHz & 2x2.35 GHz & 4x1.80 GHz)',
+                        'GPU': 'Mali-G710 MP7',
+                        'RAM': '12GB'
+                    },
+                    'Battery': {
+                        'Type': 'Li-Ion 5000 mAh, non-removable',
+                        'Charging': 'Fast charging 30W',
+                        'Wireless': 'Wireless charging 23W'
+                    }
+                },
+                prices: {
+                    'usa': {
+                        '128GB': '$899',
+                        '256GB': '$999',
+                        '512GB': '$1,099'
+                    }
+                }
+            }
+        };
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hide splash screen after progress completes
+            setTimeout(() => {
+                splashScreen.classList.add('fade-out');
+            }, 2800);
+            
+            // Load theme preference
+            const savedTheme = localStorage.getItem('theme') || 'light-mode';
+            body.className = savedTheme;
+            updateThemeIcon();
+            
+            // Load search history
+            loadSearchHistory();
+            
+            // Load comparison phones
+            loadComparisonPhones();
+            
+            // Focus on search input
+            setTimeout(() => {
+                queryInput.focus();
+            }, 3000);
+        });
+
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            body.classList.toggle('dark-mode');
+            
+            const currentTheme = body.classList.contains('light-mode') ? 'light-mode' : 'dark-mode';
+            localStorage.setItem('theme', currentTheme);
+            
+            updateThemeIcon();
+        });
+
+        function updateThemeIcon() {
+            const icon = themeToggle.querySelector('i');
+            if (body.classList.contains('light-mode')) {
+                icon.className = 'fas fa-moon';
+            } else {
+                icon.className = 'fas fa-sun';
+            }
+        }
+
+        // Search suggestions
+        queryInput.addEventListener('input', () => {
+            const value = queryInput.value.toLowerCase();
+            if (value.length < 2) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+            
+            const filtered = popularPhones.filter(phone => 
+                phone.toLowerCase().includes(value)
+            );
+            
+            if (filtered.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+            
+            searchSuggestions.innerHTML = '';
+            filtered.forEach(phone => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+                item.innerHTML = `<i class="fas fa-search suggestion-icon"></i> ${phone}`;
+                item.addEventListener('click', () => {
+                    queryInput.value = phone;
+                    searchSuggestions.style.display = 'none';
+                    form.dispatchEvent(new Event('submit'));
+                });
+                searchSuggestions.appendChild(item);
+            });
+            
+            searchSuggestions.style.display = 'block';
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!form.contains(e.target)) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        // Search history management
+        function loadSearchHistory() {
+            const history = JSON.parse(localStorage.getItem('phoneSearchHistory')) || [];
+            
+            if (history.length === 0) {
+                searchHistory.style.display = 'none';
+                return;
+            }
+            
+            historyItems.innerHTML = '';
+            history.slice(0, 5).forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `<i class="fas fa-search"></i> ${item}`;
+                historyItem.addEventListener('click', () => {
+                    queryInput.value = item;
+                    form.dispatchEvent(new Event('submit'));
+                });
+                historyItems.appendChild(historyItem);
+            });
+            
+            searchHistory.style.display = 'block';
+        }
+
+        function addToSearchHistory(query) {
+            let history = JSON.parse(localStorage.getItem('phoneSearchHistory')) || [];
+            
+            // Remove if already exists
+            history = history.filter(item => item !== query);
+            
+            // Add to beginning
+            history.unshift(query);
+            
+            // Keep only last 10 items
+            if (history.length > 10) {
+                history = history.slice(0, 10);
+            }
+            
+            localStorage.setItem('phoneSearchHistory', JSON.stringify(history));
+            loadSearchHistory();
+        }
+
+        // Load comparison phones
+        function loadComparisonPhones() {
+            comparisonDiv.innerHTML = '';
+            
+            const heading = document.createElement('h3');
+            heading.innerHTML = '<i class="fas fa-balance-scale"></i> Compare With Popular Phones';
+            comparisonDiv.appendChild(heading);
+            
+            const grid = document.createElement('div');
+            grid.className = 'comparison-grid';
+            
+            comparisonPhones.forEach(phone => {
+                const item = document.createElement('div');
+                item.className = 'comparison-item';
+                item.innerHTML = `
+                    <h4>${phone.name}</h4>
+                    <p><strong>Brand:</strong> ${phone.brand}</p>
+                    <p><strong>Display:</strong> ${phone.display}</p>
+                    <p><strong>Camera:</strong> ${phone.camera}</p>
+                    <p><strong>Chip:</strong> ${phone.chip}</p>
+                    <p><strong>Price:</strong> ${phone.price}</p>
+                `;
+                item.addEventListener('click', () => {
+                    queryInput.value = phone.name;
+                    form.dispatchEvent(new Event('submit'));
+                });
+                grid.appendChild(item);
+            });
+            
+            comparisonDiv.appendChild(grid);
+        }
+
+        // Load phone gallery - COMPLETELY FIXED
+        function loadPhoneGallery(phoneData) {
+            console.log("Loading gallery for:", phoneData.name);
+            galleryGrid.innerHTML = '';
+            
+            if (phoneData.images && phoneData.images.length > 0) {
+                console.log("Found images:", phoneData.images);
+                phoneData.images.forEach((imageData, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = imageData.src;
+                    img.alt = `${phoneData.name} - ${imageData.title}`;
+                    img.className = 'gallery-image';
+                    img.onerror = function() {
+                        console.log("Image failed to load:", imageData.src);
+                        // Fallback to placeholder if image fails to load
+                        this.src = `https://via.placeholder.com/300x400/4361ee/ffffff?text=${encodeURIComponent(imageData.title)}`;
+                    };
+                    
+                    const overlay = document.createElement('div');
+                    overlay.className = 'gallery-overlay';
+                    overlay.textContent = imageData.title;
+                    
+                    galleryItem.appendChild(img);
+                    galleryItem.appendChild(overlay);
+                    galleryGrid.appendChild(galleryItem);
+                    
+                    console.log("Added gallery item:", imageData.title);
+                });
+            } else {
+                console.log("No images found, using fallback");
+                // Fallback gallery images
+                const fallbackImages = [
+                    { 
+                        src: `https://via.placeholder.com/300x400/4361ee/ffffff?text=${encodeURIComponent(phoneData.name)}+Front`, 
+                        title: 'Front View' 
+                    },
+                    { 
+                        src: `https://via.placeholder.com/300x400/7209b7/ffffff?text=${encodeURIComponent(phoneData.name)}+Back`, 
+                        title: 'Back View' 
+                    },
+                    { 
+                        src: `https://via.placeholder.com/300x400/f72585/ffffff?text=${encodeURIComponent(phoneData.name)}+Side`, 
+                        title: 'Side View' 
+                    },
+                    { 
+                        src: `https://via.placeholder.com/300x400/4cc9f0/ffffff?text=${encodeURIComponent(phoneData.name)}+Camera`, 
+                        title: 'Camera Detail' 
+                    }
+                ];
+                
+                fallbackImages.forEach(image => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = image.src;
+                    img.alt = image.title;
+                    img.className = 'gallery-image';
+                    
+                    const overlay = document.createElement('div');
+                    overlay.className = 'gallery-overlay';
+                    overlay.textContent = image.title;
+                    
+                    galleryItem.appendChild(img);
+                    galleryItem.appendChild(overlay);
+                    galleryGrid.appendChild(galleryItem);
+                });
+            }
+            
+            // Make sure gallery is visible
+            phoneGallery.style.display = 'block';
+            console.log("Gallery should be visible now");
+        }
+
+        // Search form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const query = queryInput.value.trim();
+            if (!query) return;
+
+            // Add to search history
+            addToSearchHistory(query);
+            
+            resultDiv.style.display = 'none';
+            loadingDiv.style.display = 'block';
+            errorP.textContent = '';
+            specsDiv.innerHTML = '';
+            pricesDiv.innerHTML = '';
+            searchSuggestions.style.display = 'none';
+
+            try {
+                // First check our local database
+                const normalizedQuery = query.toLowerCase();
+                let phoneData = phoneDatabase[normalizedQuery];
+                
+                if (phoneData) {
+                    // Use local data if available
+                    setTimeout(() => {
+                        displayPhoneData(phoneData);
+                        loadingDiv.style.display = 'none';
+                        resultDiv.style.display = 'block';
+                    }, 800);
+                } else {
+                    // Try the API as fallback
+                    try {
+                        const response = await fetch(`https://api.yabes-desu.workers.dev/tools/phone-info?query=${encodeURIComponent(query)}`);
+                        if (!response.ok) throw new Error('API not available');
+                        const data = await response.json();
+
+                        loadingDiv.style.display = 'none';
+
+                        if (!data.success) {
+                            errorP.textContent = 'No phone found. Try a different model name.';
+                            resultDiv.style.display = 'block';
+                            return;
+                        }
+
+                        displayPhoneData(data);
+                    } catch (apiError) {
+                        // If API fails, use mock data
+                        console.log('API failed, using mock data:', apiError);
+                        const mockData = generateMockData(query);
+                        displayPhoneData(mockData);
+                        loadingDiv.style.display = 'none';
+                    }
+                }
+            } catch (err) {
+                loadingDiv.style.display = 'none';
+                errorP.textContent = `Oops! Something went wrong: ${err.message}. Please try again.`;
+                resultDiv.style.display = 'block';
+            }
+        });
+
+        // Display phone data
+        function displayPhoneData(data) {
+            console.log("Displaying phone data:", data);
+            phoneName.textContent = data.phoneName || data.name;
+            
+            // Set main phone image
+            if (data.imageUrl) {
+                phoneImage.src = data.imageUrl;
+            } else if (data.images && data.images.length > 0) {
+                phoneImage.src = data.images[0].src || data.images[0];
+            } else {
+                phoneImage.src = `https://via.placeholder.com/400x400/4361ee/ffffff?text=${encodeURIComponent(data.phoneName || data.name)}`;
+            }
+            
+            phoneImage.alt = data.phoneName || data.name;
+
+            // Load phone gallery
+            loadPhoneGallery(data);
+
+            // Render specs with staggered animation
+            let delay = 0;
+            for (const [category, details] of Object.entries(data.specs)) {
+                const section = document.createElement('div');
+                section.className = 'spec-section';
+                section.style.animationDelay = `${delay}ms`;
+                delay += 100;
+                
+                const h3 = document.createElement('h3');
+                const icon = getIconForCategory(category);
+                h3.innerHTML = `<i class="${icon}"></i> ${category}`;
+                section.appendChild(h3);
+
+                if (typeof details === 'object' && !Array.isArray(details)) {
+                    for (const [key, value] of Object.entries(details)) {
+                        const item = document.createElement('div');
+                        item.className = 'spec-item';
+                        const strong = document.createElement('strong');
+                        strong.textContent = key;
+                        item.appendChild(strong);
+                        const valueSpan = document.createElement('span');
+                        valueSpan.className = 'spec-value';
+
+                        if (Array.isArray(value)) {
+                            const ul = document.createElement('ul');
+                            value.forEach(v => {
+                                const li = document.createElement('li');
+                                li.textContent = v;
+                                ul.appendChild(li);
+                            });
+                            valueSpan.appendChild(ul);
+                        } else {
+                            valueSpan.textContent = value;
+                        }
+                        item.appendChild(valueSpan);
+                        section.appendChild(item);
+                    }
+                } else if (Array.isArray(details)) {
+                    const ul = document.createElement('ul');
+                    details.forEach(v => {
+                        const li = document.createElement('li');
+                        li.textContent = v;
+                        ul.appendChild(li);
+                    });
+                    section.appendChild(ul);
+                } else {
+                    const p = document.createElement('p');
+                    p.className = 'spec-value';
+                    p.textContent = details;
+                    section.appendChild(p);
+                }
+                specsDiv.appendChild(section);
+            }
+
+            // Render prices
+            if (data.prices && Object.keys(data.prices).length > 0) {
+                const pricesH3 = document.createElement('h3');
+                pricesH3.innerHTML = '<i class="fas fa-tags"></i> Pricing Overview';
+                pricesDiv.appendChild(pricesH3);
+                
+                for (const [region, priceDetails] of Object.entries(data.prices)) {
+                    const regionDiv = document.createElement('div');
+                    regionDiv.className = 'region-prices';
+                    const regionH4 = document.createElement('h4');
+                    regionH4.textContent = region.toUpperCase();
+                    regionDiv.appendChild(regionH4);
+
+                    for (const [variant, price] of Object.entries(priceDetails)) {
+                        const p = document.createElement('p');
+                        p.innerHTML = `<span>${variant}:</span> ${price}`;
+                        regionDiv.appendChild(p);
+                    }
+                    pricesDiv.appendChild(regionDiv);
+                }
+            } else {
+                const noPrices = document.createElement('p');
+                noPrices.textContent = 'Price information not available.';
+                noPrices.style.textAlign = 'center';
+                noPrices.style.color = 'var(--text-muted-light)';
+                pricesDiv.appendChild(noPrices);
+            }
+
+            resultDiv.style.display = 'block';
+        }
+
+        // Helper function to get icons for categories
+        function getIconForCategory(category) {
+            const iconMap = {
+                'Display': 'fas fa-tv',
+                'Camera': 'fas fa-camera',
+                'Performance': 'fas fa-microchip',
+                'Battery': 'fas fa-battery-full',
+                'Storage': 'fas fa-hdd',
+                'Design': 'fas fa-palette',
+                'Connectivity': 'fas fa-wifi',
+                'Software': 'fas fa-code',
+                'Audio': 'fas fa-volume-up',
+                'Security': 'fas fa-fingerprint',
+                'Network': 'fas fa-sim-card',
+                'Dimensions': 'fas fa-ruler-combined',
+                'Features': 'fas fa-star'
+            };
+            
+            return iconMap[category] || 'fas fa-info-circle';
+        }
+
+        // Mock data generator for demo purposes (fallback)
+        function generateMockData(query) {
+            const brands = ['Apple', 'Samsung', 'Google', 'OnePlus', 'Xiaomi', 'Oppo', 'Vivo', 'Realme'];
+            const brand = brands[Math.floor(Math.random() * brands.length)];
+            
+            return {
+                success: true,
+                phoneName: query,
+                imageUrl: `https://via.placeholder.com/400x400/4361ee/ffffff?text=${encodeURIComponent(query)}`,
+                images: [
+                    {
+                        src: `https://via.placeholder.com/300x400/4361ee/ffffff?text=${encodeURIComponent(query)}+Front`,
+                        title: 'Front View'
+                    },
+                    {
+                        src: `https://via.placeholder.com/300x400/7209b7/ffffff?text=${encodeURIComponent(query)}+Back`,
+                        title: 'Back View'
+                    },
+                    {
+                        src: `https://via.placeholder.com/300x400/f72585/ffffff?text=${encodeURIComponent(query)}+Side`,
+                        title: 'Side View'
+                    },
+                    {
+                        src: `https://via.placeholder.com/300x400/4cc9f0/ffffff?text=${encodeURIComponent(query)}+Camera`,
+                        title: 'Camera Detail'
+                    }
+                ],
+                specs: {
+                    'Display': {
+                        'Size': '6.1 inches',
+                        'Resolution': '2532 x 1170 pixels',
+                        'Type': 'Super Retina XDR OLED',
+                        'Refresh Rate': '120Hz'
+                    },
+                    'Camera': {
+                        'Main': '48 MP, f/1.8, 24mm (wide)',
+                        'Ultra Wide': '12 MP, f/2.2, 13mm, 120˚',
+                        'Telephoto': '12 MP, f/2.8, 77mm (telephoto)',
+                        'Features': 'Dual-LED dual-tone flash, HDR'
+                    },
+                    'Performance': {
+                        'Chipset': 'Apple A16 Bionic',
+                        'CPU': 'Hexa-core (2x3.46 GHz + 4x2.02 GHz)',
+                        'GPU': 'Apple GPU (5-core graphics)',
+                        'RAM': '6GB'
+                    },
+                    'Battery': {
+                        'Type': 'Li-Ion 3200 mAh, non-removable',
+                        'Charging': 'Fast charging 20W, 50% in 30 min',
+                        'Wireless': 'MagSafe wireless charging 15W'
+                    },
+                    'Storage': {
+                        'Internal': '128GB/256GB/512GB/1TB',
+                        'RAM': '6GB'
+                    }
+                },
+                prices: {
+                    'usa': {
+                        '128GB': '$999',
+                        '256GB': '$1,099',
+                        '512GB': '$1,299',
+                        '1TB': '$1,499'
+                    },
+                    'europe': {
+                        '128GB': '€1,149',
+                        '256GB': '€1,269',
+                        '512GB': '€1,499',
+                        '1TB': '€1,699'
+                    },
+                    'india': {
+                        '128GB': '₹129,900',
+                        '256GB': '₹139,900',
+                        '512GB': '₹159,900',
+                        '1TB': '₹179,900'
+                    }
+                }
+            };
+        }
+    </script>
+</body>
+</html>
